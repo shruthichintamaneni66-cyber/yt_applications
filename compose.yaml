@@ -1,0 +1,17 @@
+services:
+  downloader:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DEPLOY_USERNAME: ${DEPLOY_USERNAME:-downloader}
+      REQUIRE_AUTH: "1"
+      DOWNLOAD_DIR: /downloads
+    ports:
+      - "127.0.0.1:${PORT:-8080}:8000"
+    volumes:
+      - downloads:/downloads
+
+volumes:
+  downloads:
